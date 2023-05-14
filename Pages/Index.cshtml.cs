@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Linq;
 
 namespace Lab1.Pages
 {
@@ -39,10 +39,12 @@ namespace Lab1.Pages
             NumberCount = 0;
             Total = 0;
             Average = 0;
-            
+
             List<string> numbers = new List<string> { Number1, Number2, Number3 };
 
-            CalculateStatistics(numbers);
+            List<double> validNumbers = ValidateNumbers(numbers);
+
+            CalculateStatistics(validNumbers);
 
             if (NumberCount > 0)
             {
@@ -54,7 +56,7 @@ namespace Lab1.Pages
             }
         }
 
-        private void CalculateStatistics(List<string> input)
+        private List<double> ValidateNumbers(List<string> input)
         {
             List<double> numbers = new List<double>();
 
@@ -66,6 +68,11 @@ namespace Lab1.Pages
                 }
             }
 
+            return numbers;
+        }
+
+        private void CalculateStatistics(List<double> numbers)
+        {
             if (numbers.Count != 0)
             {
                 NumberCount = numbers.Count;
@@ -74,7 +81,6 @@ namespace Lab1.Pages
                 Maximum = numbers.Max();
                 Minimum = numbers.Min();
             }
-
         }
     }
 }
