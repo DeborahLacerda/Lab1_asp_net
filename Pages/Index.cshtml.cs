@@ -24,7 +24,13 @@ namespace Lab1.Pages
         [BindProperty]
         public string Number3 { get; set; }
 
-        public bool ShowStatistics { get; set; }
+        public bool ShowStatistics
+        {
+            get
+            {
+                return NumberCount > 0;
+            }
+        }
         public bool ShowErrorMessage { get; set; }
         public int NumberCount { get; set; }
         public double Maximum { get; set; }
@@ -34,7 +40,6 @@ namespace Lab1.Pages
 
         public void OnPost()
         {
-            ShowStatistics = false;
             ShowErrorMessage = false;
             NumberCount = 0;
             Total = 0;
@@ -46,16 +51,11 @@ namespace Lab1.Pages
 
             CalculateStatistics(validNumbers);
 
-            if (NumberCount > 0)
-            {
-                ShowStatistics = true;
-            }
-            else
-            {
-                ShowErrorMessage = true;
-            }
+            ShowErrorMessage = NumberCount <= 0;
+
         }
 
+        /// Validates input numbers and returns a list of valid doubles.
         private List<double> ValidateNumbers(List<string> input)
         {
             List<double> numbers = new List<double>();
@@ -71,16 +71,19 @@ namespace Lab1.Pages
             return numbers;
         }
 
+        /// Calculates statistics for a list of valid numbers.
         private void CalculateStatistics(List<double> numbers)
         {
-            if (numbers.Count != 0)
+            if (numbers.Count == 0)
             {
-                NumberCount = numbers.Count;
-                Total = numbers.Sum();
-                Average = numbers.Average();
-                Maximum = numbers.Max();
-                Minimum = numbers.Min();
+                return;
             }
+
+            NumberCount = numbers.Count;
+            Total = numbers.Sum();
+            Average = numbers.Average();
+            Maximum = numbers.Max();
+            Minimum = numbers.Min();
         }
     }
 }
