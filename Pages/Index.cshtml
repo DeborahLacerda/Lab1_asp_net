@@ -1,0 +1,64 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page - Lab 1";
+}
+
+<div class="text-center">
+    <h1 class="display-4 text-success">Statistics</h1>
+    <p>Enter one, two or three numerical numbers and click the Calculate button to get their statistics</p>
+
+    <form method="post">
+
+        <div class="form-group row">
+            <label for="First Number" class="col-sm-2 col-form-label">First Number:</label>
+            <div class="col-sm-3">
+                <input type="text" class="form-control mb-2 mr-sm-2" id="number1" name="Number1" value="@Model.Number1" />
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="Second Number" class="col-sm-2 col-form-label">Second Number:</label>
+            <div class="col-sm-3">
+                <input type="text" class="form-control mb-2 mr-sm-2" id="number2" name="Number2" value="@Model.Number2" />
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="Third Number" class="col-sm-2 col-form-label">Third Number:</label>
+            <div class="col-sm-3">
+                <input type="text" class="form-control mb-2 mr-sm-2" id="number3" name="Number3" value="@Model.Number3" />
+            </div>
+        </div>
+        <button type="submit" class="btn btn-success">Calculate</button>
+    </form>
+
+    @if (Model.ShowStatistics)
+    {
+        <div class="result-container mt-4 border p-3">
+            <p class="text-success">You entered @Model.NumberCount numbers. The following are their statistics:</p>
+            <div class="row">
+                <div class="col">
+                    <p class="fw-bold">Maximum:</p>
+                    <p>@Model.Maximum.ToString("F1")</p>
+                </div>
+                <div class="col">
+                    <p class="fw-bold">Minimum:</p>
+                    <p>@Model.Minimum.ToString("F1")</p>
+                </div>
+                <div class="col">
+                    <p class="fw-bold">Total:</p>
+                    <p>@Model.Total.ToString("F2")</p>
+                </div>
+                <div class="col">
+                    <p class="fw-bold">Average:</p>
+                    <p>@Model.Average.ToString("F2")</p>
+                </div>
+            </div>
+        </div>
+    }
+    else if (Model.ShowErrorMessage)
+    {
+        <div class="mt-4">
+            <p class="text-danger">You did not enter any number, no statistics were calculated!</p>
+        </div>
+    }
+</div>
